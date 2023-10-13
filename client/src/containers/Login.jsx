@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { LoginBg, Logo } from '../assets';
 import { LoginInput } from "../components";
-import { FaEnvelope, FaLock} from "../assets/icons";
+import { FaEnvelope, FaLock, FcGoogle} from "../assets/icons";
 import { motion} from "framer-motion";
 import { buttonClick } from '../animations';
 
@@ -33,7 +33,7 @@ const Login = () => {
             {/* Welcome text */}
 
             <p className='text-3xl font-semibold text-headingColor'>Metro Food Point</p>
-            <p className='text-xl text-textColor -mt-6'>Sign in</p>
+            <p className='text-xl text-textColor -mt-6'>{isSignUp ? "Sign Up" : "Sign in"}</p>
 
             {/* input section */}
             <div className='w-full flex flex-col items-center justify-center gap-6 px-4 md:px-12 py-4'>
@@ -49,12 +49,39 @@ const Login = () => {
 
                 {!isSignUp ? (
                 <p>
-                    Doesn't have an account : <motion.button {...buttonClick}>Create one</motion.button>
+                    Doesn't have an account : {""} 
+                    <motion.button {...buttonClick} className='text-white underline cursor-pointer bg-transparent ' onClick={() => setisSignUp(true)}>Create one</motion.button>
                 </p>
                 ) : (
-                <p></p>
+                <p>
+
+                    Already have an account : {""} 
+                    <motion.button {...buttonClick} className='text-white underline cursor-pointer bg-transparent'onClick={() => setisSignUp(false)}>Sign in Here</motion.button>
+                
+                </p>
                 )}
+
+
+                {/* button section */}
+               {isSignUp ? (
+                 <motion.button {...buttonClick} className='w-full px-4 py-2 rounded-md bg-red-400 cursor-pointer text-white text-xl capitalize hover:bg-red-500 transition-all duration-150'>Sign Up
+                 </motion.button>
+               ): (
+                <motion.button {...buttonClick} className='w-full px-4 py-2 rounded-md bg-red-400 cursor-pointer text-white text-xl capitalize hover:bg-red-500 transition-all duration-150'>Sign in
+                </motion.button>
+               )}
             </div>
+            <div className='flex items-center justify-between gap-16'>
+                <div className='w-24 h-[1px] rounded-md bg-white'></div>
+                <p className='text-white'>Or</p>
+                <div className='w-24 h-[1px] rounded-md bg-white'></div>
+            </div>
+
+
+            <motion.div {...buttonClick} className='flex items-center justify-center px-20 py-2 bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl gap-4'>
+                <FcGoogle className='text-3xl'/>
+                <p className='capitalize text-base text-headingColor'>Sign in with Google</p>
+            </motion.div>
         </div>
     </div>
   )
