@@ -1,15 +1,18 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { LoginBg, Logo } from '../assets';
 import { LoginInput } from "../components";
 import { FaEnvelope, FaLock, FcGoogle} from "../assets/icons";
 import { motion} from "framer-motion";
 import { buttonClick } from '../animations';
 import { useNavigate} from "react-router-dom";
+import { useDispatch, useSelector } from 'react-redux';
+import { setUserDetails } from '../context/actions/userActions';
 
 
 import {getAuth, signInWithPopup, GoogleAuthProvider, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "firebase/auth";
 import {app} from "../config/firebase.config";
 import { validateUserJwtToken } from '../api';
+import { alertInfo, alertWarning } from "../context/actions/alertActions";
 
 const Login = () => {
 
@@ -23,7 +26,20 @@ const Login = () => {
     const provider = new GoogleAuthProvider();
 
 
-    const navigate = useNavigate()
+    const navigate = useNavigate();
+     const dispatch = useDispatch();
+
+
+
+     const user = useSelector((state) => state.user);
+     const alert = useSelector((state) => state.alert);
+     
+
+     useEffect(() => {
+        if(user){
+            navigate("/", {replace : true});
+        }
+     }, [user]);
 
     const loginWithGoogle = async () => {
         await signInWithPopup(firebaseAuth, provider).then(userCred => {
@@ -31,7 +47,8 @@ const Login = () => {
                 if(cred){
                     cred.getIdToken().then(token => {
                         validateUserJwtToken(token).then(data => {
-                            console.log(data);
+                            
+                            dispatch(setUserDetails(data));
                         })
                         navigate("/", { replace : true });
                     })
@@ -42,7 +59,7 @@ const Login = () => {
 
 const signUpWithEmailPass = async () => {
     if(userEmail === "" || password === "" || confirm_password === "" ){
-        //alert message
+        dispatch(alertInfo("Required fields should not be empty"));
     }
     else{
         if(password === confirm_password){
@@ -55,7 +72,7 @@ const signUpWithEmailPass = async () => {
                         cred.getIdToken().then(token => {
                             validateUserJwtToken(token).then(data => {
                                
-                                console.log(data);
+                                dispatch(setUserDetails(data));
                             })
                             navigate("/", { replace : true });
                         })
@@ -64,11 +81,10 @@ const signUpWithEmailPass = async () => {
             })
         }
         else{
-            //alert message
+            dispatch(alertWarning("Password Doesn't match"));
         }
     }
 }
-
 
 
 const signInWithEmailPass = async () => {
@@ -79,7 +95,7 @@ const signInWithEmailPass = async () => {
                     cred.getIdToken().then(token => {
                         validateUserJwtToken(token).then(data => {
                            
-                            console.log(data);
+                            dispatch(setUserDetails(data));
                         })
                         navigate("/", { replace : true });
                     })
@@ -88,7 +104,7 @@ const signInWithEmailPass = async () => {
         })
     }
     else{
-        // alert message
+        dispatch(alertInfo("Required fields should not be empty"))
     }
 }
 
