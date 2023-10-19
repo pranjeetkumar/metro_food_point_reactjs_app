@@ -22,19 +22,18 @@ const App = () => {
 
   useEffect(() => {
     setIsLoading(true);
-    firebaseAuth.onAuthStateChanged((cred) => {
+    firebaseAuth.onAuthStateChanged(cred => {
       if(cred){
-          cred.getIdToken().then((token) => {
-              validateUserJwtToken(token).then((data) => {
+          cred.getIdToken().then(token => {
+              validateUserJwtToken(token).then(data => {
                   dispatch(setUserDetails(data));
-              });
-          });
+              })
+          })
       }
       setInterval(() => {
-        setIsLoading(false)
-        
+        setIsLoading(false);
       }, 2000);
-  });
+    })
   }, [])
 
 

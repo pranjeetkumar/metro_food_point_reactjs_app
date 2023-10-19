@@ -7,7 +7,7 @@ const LoginInput = ({placeHolder, icon, inputState, inputStateFunc, type, isSign
 
 
 
-  const [isFocus, setisFocus] = useState(false);
+  const [isFocus, setIsFocus] = useState(false);
 
   return (
     <motion.div 
@@ -17,8 +17,8 @@ const LoginInput = ({placeHolder, icon, inputState, inputStateFunc, type, isSign
       <input type={type} placeholder={placeHolder} className='w-full h-full bg-transparent text-headingColor text-lg font-semibold border-none outline-none' 
       value={inputState}
       onChange={(e) => inputStateFunc(e.target.value)}
-      onFocus={() => setisFocus(true)}
-      onBlur={() => setisFocus(false)}
+      onFocus={() => setIsFocus(true)}
+      onBlur={() => setIsFocus(false)}
       />
     </motion.div>
   )
