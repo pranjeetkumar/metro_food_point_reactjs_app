@@ -19,12 +19,44 @@ export const validateUserJwtToken = async (token) => {
 
 
 // add new product
-
 export const addNewProduct = async (data) => {
-    try{
-        const res = axios.post(`${baseURL}/api/products/create`, {...data})
-        return res.data.data;
-    }catch(err){
-        return null;
+    try {
+      const res = await axios.post(`${baseURL}/api/products/create`, { ...data });
+      return res.data.data;
+    } catch (err) {
+      return null;
     }
-}
+  };
+
+
+  // get all the products
+export const getAllProducts = async () => {
+  try {
+    const res = await axios.get(`${baseURL}/api/products/all`);
+    return res.data.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+// delete a product
+export const deleteAProduct = async (productId) => {
+  try {
+    const res = await axios.delete(
+      `${baseURL}/api/products/delete/${productId}`
+    );
+    return res.data.data;
+  } catch (err) {
+    return null;
+  }
+};
+
+export const getAllUsers = async () => {
+  try {
+    const res = await axios.get(`${baseURL}/api/users/all`);
+    return res.data.data;
+  } catch (err) {
+    return null;
+  }
+};
+ 

@@ -9,6 +9,7 @@ import { alertDanger, alertNULL, alertSuccess } from "../context/actions/alertAc
 import { motion } from "framer-motion";
 import { buttonClick } from "../animations";
 import { addNewProduct, getAllProducts } from "../api";
+import { setAllProducts } from "../context/actions/productActions";
 
 const DBNewItem = () => {
   const [itemName, setItemName] = useState("");
@@ -81,9 +82,9 @@ const DBNewItem = () => {
       setPrice("");
       setCategory(null);
     });
-    // getAllProducts().then((data) => {
-    //   dispatch(setAllProducts(data));
-    // });
+    getAllProducts().then((data) => {
+      dispatch(setAllProducts(data));
+    });
   };
 
   return (
