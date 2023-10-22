@@ -5,10 +5,11 @@ import { getAuth } from 'firebase/auth';
 import { app } from "./config/firebase.config";
 import { useDispatch, useSelector } from 'react-redux';
 import { setUserDetails } from './context/actions/userActions';
-import { validateUserJwtToken } from './api';
+import { getAllCartItems, validateUserJwtToken } from './api';
 import { motion } from "framer-motion";
 import { fadeInOut} from "./animations";
 import { MainLoader, Alert } from './components';
+import { setCartItems } from './context/actions/cartAction';
 
 
 const App = () => {
@@ -26,6 +27,12 @@ const App = () => {
       if(cred){
           cred.getIdToken().then(token => {
               validateUserJwtToken(token).then(data => {
+                if(data){
+                  getAllCartItems(data.user_id).then((items) => {
+                    console.log(items);
+                    dispatch(setCartItems(items));
+                  })
+                }
                   dispatch(setUserDetails(data));
               })
           })
