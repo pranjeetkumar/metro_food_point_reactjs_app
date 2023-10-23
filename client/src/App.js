@@ -8,7 +8,7 @@ import { setUserDetails } from './context/actions/userActions';
 import { getAllCartItems, validateUserJwtToken } from './api';
 import { motion } from "framer-motion";
 import { fadeInOut} from "./animations";
-import { MainLoader, Alert, CheckOutSuccess } from './components';
+import { MainLoader, Alert, CheckOutSuccess, UsersOrder } from './components';
 import { setCartItems } from './context/actions/cartAction';
 
 
@@ -56,6 +56,7 @@ const App = () => {
         <Route path="/login" element = { <Login/> }/>
         <Route path="/dashboard/*" element = { <Dashboard/> }/>
         <Route path="/checkout-success" element={<CheckOutSuccess />} />
+        <Route path="/user-orders" element = {<UsersOrder/>}/>
       </Routes>
 
       {alert?.type && <Alert type={alert?.type} message={alert?.message}/>}
