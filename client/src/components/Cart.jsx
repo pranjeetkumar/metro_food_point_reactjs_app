@@ -4,11 +4,7 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { buttonClick, slideIn, staggerFadeInOut } from "../animations";
 import { baseURL, getAllCartItems, increaseItemQuantity } from "../api";
-import {
-  BiChevronsRight,
-  FcClearFilters,
-  HiCurrencyRupee,
-} from "../assets/icons";
+import { BiChevronsRight, FcClearFilters, HiCurrencyRupee } from "../assets/icons";
 import { alertNULL, alertSuccess } from "../context/actions/alertActions";
 import { setCartItems } from "../context/actions/cartAction";
 import { setCartOff } from "../context/actions/displayCartAction";
@@ -74,10 +70,10 @@ const Cart = () => {
                   <CartItemCard key={i} index={i} data={item} />
                 ))}
             </div>
-            <div className="bg-zinc-800 rounded-t-[60px] w-full h-[35%] flex flex-col items-center justify-center px-4 py-6 gap-24">
+            <div className="bg-zinc-800 rounded-t-[60px] w-full h-[18%] flex flex-col items-center justify-center px-4 py-6 gap-4">
               <div className="w-full flex items-center justify-evenly">
-                <p className="text-3xl text-zinc-500 font-semibold">Total</p>
-                <p className="text-3xl text-orange-500 font-semibold flex items-center justify-center gap-1">
+                <p className="text-xl text-zinc-500 font-semibold">Total</p>
+                <p className="text-xl text-orange-500 font-semibold flex items-center justify-center gap-1">
                   <HiCurrencyRupee className="text-primary" />
                   {total}
                 </p>
@@ -109,7 +105,7 @@ export const CartItemCard = ({ index, data }) => {
   const dispatch = useDispatch();
 
   const decrementCart = (productId) => {
-    dispatch(alertSuccess("Updated the cartitem"));
+    dispatch(alertSuccess("Updated the cart item"));
 
     increaseItemQuantity(user?.user_id, productId, "decrement").then((data) => {
       getAllCartItems(user?.user_id).then((items) => {
@@ -120,7 +116,7 @@ export const CartItemCard = ({ index, data }) => {
   };
 
   const incrementCart = (productId) => {
-    dispatch(alertSuccess("Updated the cartitem"));
+    dispatch(alertSuccess("Updated the cart item"));
     increaseItemQuantity(user?.user_id, productId, "increment").then((data) => {
       getAllCartItems(user?.user_id).then((items) => {
         dispatch(setCartItems(items));
